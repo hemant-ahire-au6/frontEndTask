@@ -3,6 +3,39 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 
+import { Bar } from 'react-chartjs-2';
+
+
+const data = {
+  labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+  datasets: [
+    {
+      label: '# Post per month',
+      data: [12, 19, 3, 5, 2, 3],
+      backgroundColor: [
+        'rgb(37, 150, 190)'
+      ],
+      borderColor: [
+        'rgb(37, 150, 190)'
+      ],
+      borderWidth: 1,
+    },
+  ],
+};
+
+
+const options = {
+  scales: {
+    yAxes: [
+      {
+        ticks: {
+          beginAtZero: true,
+        },
+      },
+    ],
+  },
+};
+
 
 
 export default function ChartCard(props) {
@@ -13,6 +46,7 @@ export default function ChartCard(props) {
         <h3> {props.title}</h3>
         </Typography>
         
+        <Bar data={data} options={options} />
       </CardContent>
     </Card>
   );
