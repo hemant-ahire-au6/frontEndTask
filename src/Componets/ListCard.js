@@ -8,7 +8,6 @@ import CircularProgress from '@mui/material/CircularProgress';
 
 
 export default function ListCard(props) {
-  console.log(props.data)
 
   let latest_5_post = props.data.posts ? props.data.posts.slice(0, 5) : []
   return (

@@ -74,7 +74,7 @@ function Dashboard(props) {
                             <ListCard title="Latest 5 Published posts List" data={postData} />
                         </Grid>
                         <Grid item xl={6} xs={12}>
-                            <ChartCard title="Posts per month Chart" />
+                            <ChartCard title="Posts per month Chart"data={postData} />
                         </Grid>
 
                     </Grid>
