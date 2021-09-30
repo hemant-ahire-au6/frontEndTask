@@ -32,16 +32,22 @@ function PostPage() {
     });
 
     let tooShortPost = postData.filter(data =>{
-        return data.html.length > 250
+        return data.html.split(" ").length < 250
     });
 ;
     let tooLongPost  = postData.filter(data =>{
-        return data.html.length > 1500
+        console.log(data.html.split(" ").length)
+
+        return data.html.split(" ").length > 1500
     });
 ;
 
     return (
         <>
+
+        {
+            console.log(tooLongPost)
+        }
             <Grid container className="post-page-container" >
                 <Grid item xs={10} >
                     <Grid container >
