@@ -12,9 +12,6 @@ function LinkPage() {
 
     const [postData, setPostData] = React.useState([]);
     const [totalLinks] = React.useState([]);
-    const [internalLink] = React.useState([]);
-    const [externalLink] = React.useState([]);
-
 
     useEffect(() => {
         fetch(`${API_LINK}/posts/?key=${API_KEY}`)
@@ -23,44 +20,45 @@ function LinkPage() {
 
     }, []);
 
+   
+    
+    var broken_links = []
 
-    const internal_Link_data = postData.filter((array, index) => {
+//pushing all the links in the array whos status code is above 300, meaning those links are broken
+    postData.map(link => {
+        fetch(link.url)
+        .then(function(response) {
+
+            if (response.status > 300){
+                console.log("i am 300")
+                broken_links.push(link.url)
+            }
+          });
+
+        return totalLinks.push(link.url)
+    })
+
+//checking out of broken links how many are internal
+    const internal_Link_data = broken_links.filter((array, index) => {
         const url = array.url
         let link = url.slice(0, 27)
         return array.url.includes(link)
     })
 
-    const external_Link_data = postData.filter((array, index) => {
+//checking out of broken how many are internal
+    const external_Link_data = broken_links.filter((array, index) => {
         const url = array.url
         let link = url.slice(0, 27)
         return !array.url.includes(link)
     })
 
-    postData.map(link => {
-        return totalLinks.push(link.url)
-        // return setTotalLinks([...totalLinks,link.url])
-    })
-
-    const inter_Link = internal_Link_data.map(link => {
-        return internalLink.push(link.url)
-        // return setInternalLink([...internalLink,link.url])
-    })
-
-    const external_Link = external_Link_data.map(link => {
-        return externalLink.push(link.url)
-
-        // return setExternalLink([...externalLink,link.url])
-    })
 
     const linkNumber = [...new Set(totalLinks)]
 
-    const internal_link_number = [...new Set(inter_Link)]
-
-    const external_link_number = [...new Set(external_Link)]
 
     return (
         <>
-            {console.log(external_Link_data)}
+
             <Grid container >
                 <Grid item xs={12}>
                     <Grid container className="link-page-container" >
@@ -75,13 +73,13 @@ function LinkPage() {
                                     
                                     </Typography>
                                     <Typography className="typography1">
-                                        <h3>Number of Inter Links </h3>
-                                        <h4> {internal_link_number.length} </h4>
+                                        <h3>Number of Broken Internal Links </h3>
+                                        <h4> {internal_Link_data.length} </h4>
                                     
                                     </Typography>
                                     <Typography className="typography1">
-                                        <h3>Number of External Links</h3>
-                                        <h4>{external_link_number.length} </h4>
+                                        <h3>Number Broken of External Links</h3>
+                                        <h4>{external_Link_data.length} </h4>
                                     </Typography>
 
                                 </CardContent>
